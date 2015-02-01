@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Sample Category"
+            id="com.packtpub.e4.hello.ui.commands.category">
+      </category>
+      <command
+            name="Hello Command"
+            categoryId="com.packtpub.e4.hello.ui.commands.category"
+            id="com.packtpub.e4.hello.ui.commands.sampleCommand">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="com.packtpub.e4.hello.ui.commands.sampleCommand"
+            class="com.packtpub.e4.hello.ui.handlers.HelloHandler">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="com.packtpub.e4.hello.ui.commands.sampleCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="Hello Menu"
+               mnemonic="M"
+               id="com.packtpub.e4.hello.ui.menus.sampleMenu">
+            <command
+                  commandId="com.packtpub.e4.hello.ui.commands.sampleCommand"
+                  icon="icons/nuke.gif"
+                  id="com.packtpub.e4.hello.ui.menus.sampleCommand"
+                  mnemonic="S">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="com.packtpub.e4.hello.ui.toolbars.sampleToolbar">
+            <command
+                  commandId="com.packtpub.e4.hello.ui.commands.sampleCommand"
+                  icon="icons/nuke.gif"
+                  tooltip="Tere!"
+                  id="com.packtpub.e4.hello.ui.toolbars.sampleCommand">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+
+</plugin>
