@@ -8,6 +8,8 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Resource;
@@ -17,6 +19,7 @@ import org.eclipse.swt.widgets.Composite;
 public class ClockWidget extends Canvas {
 
 	private final Color color;
+	private int offset;
 	
 	public ClockWidget(Composite parent, int style, RGB rgb) {
 		super(parent, style);
@@ -73,21 +76,27 @@ public class ClockWidget extends Canvas {
 
 		e.gc.setBackground(color);
 		
+		//draw the second hand
 		e.gc.drawArc(e.x,e.y,e.width-1,e.height-1,0,360);
 		e.gc.fillArc(e.x, e.y, e.width - 1, e.height - 1, arc - 1, 2);
 		
+		//draw the hour hand
+		e.gc.setBackground(e.display.getSystemColor(SWT.COLOR_BLACK));
+		int hours = calendar.get(Calendar.HOUR) + offset;
+		arc = (3 - hours) * 30 % 360;
+		e.gc.fillArc(e.x, e.y, e.width-1, e.height-1, arc - 5, 10);
+		
 		Color white = e.display.getSystemColor(SWT.COLOR_WHITE);
 		e.gc.setBackground(white);
+		
+		//draw the time in the center of the clock
 		e.gc.drawText(""+calendar.get(Calendar.HOUR)+":"+calendar.get(Calendar.MINUTE)+":"+calendar.get(Calendar.SECOND), (e.x+e.width)/4, (e.y+e.height)/2);
 	}
 	
-	@Override
-	public void dispose() {
-		if (color != null && !color.isDisposed())
-		{
-			color.dispose();
-		}
-		super.dispose();
+	public void setFont(FontData fdata)
+	{
+		Font font = new Font(getDisplay(), fdata);
+		setFont(font);
 	}
 	
 	@Override
@@ -103,6 +112,18 @@ public class ClockWidget extends Canvas {
 		if (size == SWT.DEFAULT)
 			size = 50;
 		return new Point(size, size);
+	}
+	
+	public int getOffset() {
+		return offset;
+	}
+
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+
+	public Color getColor() {
+		return color;
 	}
 
 }
