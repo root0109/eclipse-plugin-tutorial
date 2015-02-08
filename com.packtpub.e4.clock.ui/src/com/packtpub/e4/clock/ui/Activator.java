@@ -53,7 +53,7 @@ public class Activator extends AbstractUIPlugin {
 		//a small fix to overcome the IllegalStateException
 		
 		//we cannot c the getDefault()
-		final Display display = getWorkbench().getDisplay();
+		/*final Display display = getWorkbench().getDisplay();
 		
 		display.asyncExec( new Runnable() {
 			public void run() {
@@ -99,7 +99,7 @@ public class Activator extends AbstractUIPlugin {
 					});
 				}
 			}
-			});
+			});*/
 		
 		
 	}
