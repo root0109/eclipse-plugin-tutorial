@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.TimeZone;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -21,6 +22,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -99,9 +101,18 @@ public class TimeZoneTreeView extends ViewPart {
 				 treeViewer, getSite().getPart());
 				getSite().getWorkbenchWindow().getSelectionService()
 				 .addSelectionListener(selectionListener);
+				
+		hookContextMenu(treeViewer);
 
 	}
 
+	private void hookContextMenu(Viewer viewer) {
+		MenuManager manager = new MenuManager("#PopupMenu");
+		Menu menu = manager.createContextMenu(viewer.getControl());
+		viewer.getControl().setMenu(menu);
+		getSite().registerContextMenu(manager, viewer);
+	}
+	
 	public void setFocus() {
 		treeViewer.getControl().setFocus();
 	}
